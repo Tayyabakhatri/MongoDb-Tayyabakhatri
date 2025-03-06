@@ -6,8 +6,9 @@ import User from '../Model/userModel.js'
 
 const createUser = async (req, res) => {
     try {
-        const validatedUser = await userSchema.validateAsync(req.bady)
-        const newUser = await new User(validatedUser) //userData in a name of collection 
+        const validatedUser = await userSchema.validateAsync(req.body)
+        console.log("Validated User Data:", validatedUser); // Debug log
+        const newUser =await  new User(validatedUser) //userData in a name of collection 
         await newUser.save()
         res.status(201).json({
             user: newUser,
@@ -16,7 +17,7 @@ const createUser = async (req, res) => {
 
     } catch (error) {
         res.status(500).json({
-            error: error
+            error: error.details?error.details[0].message : error.message,
         })
 
     }
