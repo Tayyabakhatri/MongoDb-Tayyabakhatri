@@ -10,6 +10,7 @@ const port = process.env.PORT || 3000
 app.use(cors())
 app.use(express.json())
 
+
 //connect to db
 connectToDb().then(() => {
     console.log("connected to DB");
