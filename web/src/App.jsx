@@ -1,19 +1,20 @@
-import React from 'react'
-import Navbar from '../Components/Navbar/Navbar.jsx'
-import './App.css'
-import Hero from '../Components/Hero/Hero.jsx'
-import Swiper from '../Components/Swiper/Swiper.jsx'
+import React from "react";
+import Navbar from "../Components/Navbar/Navbar.jsx";
+import "./App.css";
+
+import Swiper from "../Components/Swiper/Swiper.jsx";
+// import SignUp from "../Components/SignUp/SignUp.jsx";
+// import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
   return (
     <>
-   <Navbar/>
-   <Hero/>
-   <Swiper/>
+      
+        <Navbar />
+      {/* <Hero />
+      <Swiper /> */}
     </>
-  )
+  );
 }
- 
 
-
-export default App
+export default App;

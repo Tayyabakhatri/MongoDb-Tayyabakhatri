@@ -22,26 +22,44 @@ const createUser = async (req, res) => {
 
     //     }
     // }
-    try {
-        // Validate user data using Joi schema
-        const validatedUser = await userSchema.validateAsync(req.body)
-        console.log("Validated User Data:", validatedUser); // Debug log
 
-    } catch (err) {
-        console.log(err);
-    }
-    const user = new User({
-        name: req.body.name,
-        email: req.body.email,
-        password: req.body.password,
-    });
 
-    try {
-        const savedUser = await user.save();
-        res.send(savedUser);
-    } catch (error) {
-        res.send(error);
-    }
+        try {
+            // Validate user data using Joi schema
+            const validatedUser = await userSchema.validateAsync(req.body)
+            // console.log("Validated User Data:", validatedUser); // Debug log
+            const user =await new User(validatedUser);
+            const savedUser = await user.save();
+        return  res.status(201).json(savedUser);
+            
+
+        } catch (err) {
+            console.log(err);
+        }
+        // {
+        //     name: req.body.name,
+        //     email: req.body.email,
+        //     password: req.body.password,
+        // }
+
+        // try {
+        //     const savedUser = await user.save();
+        //     res.send(savedUser);
+        // } catch (error) {
+        //     res.send(error);
+        // }
+
+
+
+
+    // try {
+    //     const validatedUser = await userSchema.validateAsync(req.bady)
+    //     const user = await new User(validatedUser)
+    //     await user.save()
+    //     return  res.status(201).json({ message: "User created successfully", user });
+    // } catch (error) {
+    //     return res.status(500).json({ message: "Server error", error: error.message });
+    // }
 }
 
 const getAllUsers = async (req, res) => {
@@ -52,8 +70,14 @@ const getAllUsers = async (req, res) => {
             message: "all users found successfully"
         })
     } catch (error) {
-        console.log("error fetching users", error);
+        console.error(error.message);
+
+        res.status(500).json({
+            error: error.message,
+            message: "error fetching users"
+        })
+
 
     }
 }
-export { createUser }
+export { createUser, getAllUsers }

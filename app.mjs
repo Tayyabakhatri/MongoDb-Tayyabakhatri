@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors'
 import userRoutes from './Routes/userRoutes.js'
-import connectToDb from './db/db.js'
+import connectedToDb from './db/db.js'
 
 
 const app = express()
@@ -12,7 +12,7 @@ app.use(express.json())
 
 
 //connect to db
-connectToDb().then(() => {
+connectedToDb().then(() => {
     console.log("connected to DB");
 }).catch(err => {
     console.log("error connecting DB", err);
@@ -21,7 +21,6 @@ connectToDb().then(() => {
 
 //middleware
 app.use('/api', userRoutes)
-app.get('/', (req, res) => console.log("chalrha he "))
 
 
 app.listen(port, () => {
