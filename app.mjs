@@ -13,12 +13,6 @@ app.use(express.json())
 
 //connect to db
 connectedToDb()
-// .then(() => {
-//     console.log("connected to DB");
-// }).catch(err => {
-//     console.log("error connecting DB", err);
-
-// })
 
 //middleware
 app.use('/api', userRoutes)

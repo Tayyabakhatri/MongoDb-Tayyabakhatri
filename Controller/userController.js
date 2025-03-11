@@ -3,25 +3,39 @@
 import userSchema from "../Schema/userSchema.js";
 //2. Models ,which is the name of collection
 import User from '../Model/userModel.js'
+import bcrypt from 'bcrypt'
+import chalk from "chalk";
 
+
+//create user
 export const createUser = async (req, res) => {
     try {
-        // Validate user data using Joi schema
+
         const validatedUser = await userSchema.validateAsync(req.body)
-        // console.log("Validated User Data:", validatedUser); // Debug log
-        const newUser = await new User({ ...validatedUser });
+        const password = bcrypt.hashSync(validatedUser.password, 10)
+
+        const newUser = await new User({ ...validatedUser, password });
         await newUser.save();
-      
+
         res.status(201).json({
             message: "user has created",
             user: newUser
         })
 
     } catch (err) {
-        console.log(err.message);
+        if (err.code === 11000) {
+            return res.status(409).json({
+                message: "this email is in use",
+                error: err.message
+            })
+        }
+        res.status(500).json({
+            message: "internal server error ",
+            error: err.message
+        })
     }
 }
-
+//get allusers
 export const getAllUsers = async (req, res) => {
     try {
         const userCollection = await User.find()
@@ -30,14 +44,95 @@ export const getAllUsers = async (req, res) => {
             message: "all users found successfully"
         })
     } catch (error) {
-        console.error(error.message);
+        console.error(chalk.bgBlue.white(error.message));
 
         res.status(500).json({
             error: error.message,
             message: "error fetching users"
         })
 
+    }
+}
 
+//update users
+
+export const updateUser = async (req, res) => {
+    try {
+        const { id } = req.params
+        const updateUser = await User.findOneAndUpdate({ id: id, }, { ...res.body }, { new: true }) //id se us id pr jaiga jo db se generate howi he ,us ka sara data delete kry ga ,ur phir new data la kr dega 
+        if (!updateUser) {
+            res.status(404).json({
+                message: "user not found"
+            })
+        }
+        res.send({
+            user: updateUser,
+            message: "userUpdated successfully"
+        })
+    } catch (error) {
+        res.status(500).json({
+            message: "internal server error", error
+        })
+    }
+}
+//delete user 
+export const deleteUser = async (req, res) => {
+    try {
+        const { id } = req.params
+        const deleteUser = User.findOneAndDelete(id)
+        if (!deleteUser) {
+            return res.status(404).json({
+                message: "user not found",
+            })
+        }
+        res.send({
+            deleteId: id,
+            message: "user deleted"
+        })
+
+    } catch (error) {
+        res.status(500).json({
+            message: "internal server error", error
+        })
+        console.log(chalk.bgBlue.white(error));
+
+    }
+}
+
+//getting one user
+export const singleUser = async (req, res) => {
+    try {
+        if (!req.body.email || req.body.password) {
+            console.log(chalk.bgCyan.blue("email or password not found"));
+
+            res.status(400).json({
+                success: false,
+                message: "enter correct credentials"
+            })
+        }
+        const user = await User.findOne({ email: req.body.email })
+
+        const compare = await bcrypt.compare(req.body.password, user.password)
+        if (!user) {
+            return res.status(400).json({
+                success: false,
+                message: "invalid credentials"
+            })
+        }
+        if (!compare) {
+            return res.body.status(401).json({
+                success: false,
+                message: "unauthorized user"
+            })
+        }
+        res.status(200).json({
+            success: true,
+            message: "user Sign in",
+            user: user.id
+        })
+    } catch {
+        console.log(chalk.bgRed.white(error));
+        res.status(500).json({ message: "Internal server error", error });
     }
 }
 
