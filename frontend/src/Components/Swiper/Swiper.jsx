@@ -2,14 +2,14 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
-import logo1 from "../../src/assets/slideLogos/angrybuchi.webp";
-import logo2 from "../../src/assets/slideLogos/branreluaoandassociates.webp";
-import logo3 from "../../src/assets/slideLogos/sogbuyan-logo.webp";
-import logo4 from "../../src/assets/slideLogos/hvitality.webp";
-import logo5 from "../../src/assets/slideLogos/slyr_games.webp";
-import logo6 from "../../src/assets/slideLogos/lenikiko.webp";
-import logo7 from "../../src/assets/slideLogos/mayor-aguinaldo.webp";
-import logo8 from "../../src/assets/slideLogos/protostarter.webp";
+import logo1 from "../../assets/slideLogos/angrybuchi.webp";
+import logo2 from "../../assets/slideLogos/branreluaoandassociates.webp";
+import logo3 from "../../assets/slideLogos/sogbuyan-logo.webp";
+import logo4 from "../../assets/slideLogos/hvitality.webp";
+import logo5 from "../../assets/slideLogos/slyr_games.webp";
+import logo6 from "../../assets/slideLogos/lenikiko.webp";
+import logo7 from "../../assets/slideLogos/mayor-aguinaldo.webp";
+import logo8 from "../../assets/slideLogos/protostarter.webp";
 
 const Swipper = () => {
   return (

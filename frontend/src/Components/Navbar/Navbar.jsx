@@ -2,9 +2,9 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Nav from "react-bootstrap/Nav";
 
-import logo from "../../src/assets/logo.webp";
+import logo from "../../assets/logo.webp";
 import SignUp from "../SignUp/SignUp.jsx";
-import Hero from "../Hero/Hero.jsx";
+import Hero from "../../Components/Hero/Hero.jsx";
 
 const Navbar = () => {
   return (

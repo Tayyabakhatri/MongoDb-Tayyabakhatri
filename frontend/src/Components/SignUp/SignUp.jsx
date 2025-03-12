@@ -1,7 +1,34 @@
 import React from "react";
-import logo from "../../src/assets/logo.webp";
+import logo from "../../assets/logo.webp";
+import { useState,useRef } from "react";
 
 const SignUp = () => {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
+  const inputRef=useRef(null)
+  console.log(inputRef.current);
+  
+  const gettingData = (e) => {
+    // console.log(e.target.value);
+let data=e.target.value 
+
+console.log(data);
+
+    
+    // const { name, value } = e.target;
+    // setFormData((preData) => ({
+    //   ...preData,
+    //   [name]: value,
+    // }));
+    // console.log(formData);
+  };
+
+
+
+
   return (
     <>
       <div className=" flex min-h-full flex-col justify-center px-6 py-12 lg:px-8 my-10">
@@ -16,17 +43,18 @@ const SignUp = () => {
           <htmlForm className="space-y-6" action="#" method="POST">
             <div>
               <label
-                htmlFor="email"
+                htmlFor="name"
                 className="block text-sm/6 font-medium text-gray-900"
               >
                 Your Name
               </label>
               <div className="mt-2">
                 <input
-                  type="email"
-                  name="email"
-                  id="email"
-                  autoComplete="email"
+                onChange={gettingData}
+                  ref={inputRef}
+                  type="text"
+                  name="name"
+                  id="name"
                   required
                   className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                 />
@@ -41,6 +69,8 @@ const SignUp = () => {
               </label>
               <div className="mt-2">
                 <input
+                  
+                  onChange={gettingData}
                   type="email"
                   name="email"
                   id="email"
@@ -52,28 +82,20 @@ const SignUp = () => {
             </div>
 
             <div>
-              <div className="flex items-center justify-between">
-                <label
-                  htmlFor="password"
-                  className="block text-sm/6 font-medium text-gray-900"
-                >
-                  Password
-                </label>
-                <div className="text-sm">
-                  <a
-                    href="#"
-                    className="font-semibold text-indigo-600 hover:text-indigo-500"
-                  >
-                    htmlForgot password?
-                  </a>
-                </div>
-              </div>
+              <label
+                htmlFor="password"
+                className="block text-sm/6 font-medium text-gray-900"
+              >
+                Password
+              </label>
               <div className="mt-2">
                 <input
+                 
+                 onChange={gettingData}
                   type="password"
                   name="password"
                   id="password"
-                  autoComplete="current-password"
+                  autoComplete="password"
                   required
                   className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                 />

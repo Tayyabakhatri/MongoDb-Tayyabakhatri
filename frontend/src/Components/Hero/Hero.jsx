@@ -1,5 +1,5 @@
 import React from "react";
-import hero from "../../src/assets/hero.webp";
+import hero from "../../assets/hero.webp";
 import Swiper from "../Swiper/Swiper.jsx";
 // import {BrowserRouter as Router,Routes,Route, Link } from "react-router-dom";
 

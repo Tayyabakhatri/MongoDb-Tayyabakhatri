@@ -5,6 +5,8 @@ import 'dotenv/config'
 const url = process.env.MONGODB_URL;
 
 const connectedToDb = async () => {
+    mongoose.connection.on("connected", () => console.log("✅ DB Connected"));
+
     try {
         await mongoose.connect(url);
         console.log(chalk.bgGreen.white("✅ Connected to MongoDB"));
