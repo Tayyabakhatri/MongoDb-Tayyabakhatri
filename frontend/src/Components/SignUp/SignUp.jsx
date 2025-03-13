@@ -1,6 +1,7 @@
 import React from "react";
 import logo from "../../assets/logo.webp";
-import { useState,useRef } from "react";
+import { useState } from "react";
+import axios from axios
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
@@ -8,26 +9,19 @@ const SignUp = () => {
     email: "",
     password: "",
   });
-  const inputRef=useRef(null)
-  console.log(inputRef.current);
-  
-  const gettingData = (e) => {
-    // console.log(e.target.value);
-let data=e.target.value 
-
-console.log(data);
-
-    
-    // const { name, value } = e.target;
-    // setFormData((preData) => ({
-    //   ...preData,
-    //   [name]: value,
-    // }));
-    // console.log(formData);
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+    console.log(formData);
   };
+  const handleSubmit = async (e) => {
+    try {
+const {data}= await axios.post('http://localhost:3000/user')
+console.log("server Response" ,data);
 
+    } catch (e) {
 
-
+    }
+  };
 
   return (
     <>
@@ -50,8 +44,7 @@ console.log(data);
               </label>
               <div className="mt-2">
                 <input
-                onChange={gettingData}
-                  ref={inputRef}
+                  onChange={handleChange}
                   type="text"
                   name="name"
                   id="name"
@@ -69,8 +62,7 @@ console.log(data);
               </label>
               <div className="mt-2">
                 <input
-                  
-                  onChange={gettingData}
+                  onChange={handleChange}
                   type="email"
                   name="email"
                   id="email"
@@ -90,8 +82,7 @@ console.log(data);
               </label>
               <div className="mt-2">
                 <input
-                 
-                 onChange={gettingData}
+                  onChange={handleChange}
                   type="password"
                   name="password"
                   id="password"
@@ -104,6 +95,7 @@ console.log(data);
 
             <div>
               <button
+              onSubmit={handleSubmit}
                 type="submit"
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
