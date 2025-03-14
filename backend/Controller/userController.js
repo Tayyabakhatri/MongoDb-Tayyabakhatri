@@ -11,10 +11,11 @@ import chalk from "chalk";
 export const createUser = async (req, res) => {
     try {
 
+
         const validatedUser = await userSchema.validateAsync(req.body)
         const password = bcrypt.hashSync(validatedUser.password, 10)
 
-        const newUser = await new User({ ...validatedUser, password });
+        const newUser = await new User({ ...validatedUser, password: password });
         await newUser.save();
 
         res.status(201).json({

@@ -1,25 +1,44 @@
 import React from "react";
 import logo from "../../assets/logo.webp";
 import { useState } from "react";
-import axios from axios
+import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 
 const SignUp = () => {
+  const [showpassword, setShowpassword] = useState(true);
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
   });
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-    console.log(formData);
+    // setFormData((preData) => ({
+    //   ...preData,
+    //   [e.target.name]: e.target.value,
+    // }));
+    setFormData((prevState) => {
+      const updatedData = { ...prevState, [e.target.name]: e.target.value };
+      console.log("Updated Form Data:", updatedData); // ✅ Check if name updates
+      return updatedData;
+    });
   };
   const handleSubmit = async (e) => {
+    e.preventDefault();
     try {
-const {data}= await axios.post('http://localhost:3000/user')
-console.log("server Response" ,data);
+      if (!formData.name || !formData.email || !formData.password) {
+        console.error("❌ Error: All fields are required!");
+        return;
+      }
+      const response = await fetch("http://localhost:3000/api/user", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
 
+      const data = await response.json();
+      console.log("server Response", data);
     } catch (e) {
-
+      console.error(e.message);
     }
   };
 
@@ -29,12 +48,12 @@ console.log("server Response" ,data);
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img className="mx-auto h-10 w-auto" src={logo} alt="Your Company" />
           <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900">
-            Sign in to your account
+            Sign up to your account
           </h2>
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <htmlForm className="space-y-6" action="#" method="POST">
+          <form className="space-y-6" onSubmit={handleSubmit} method="POST">
             <div>
               <label
                 htmlFor="name"
@@ -80,29 +99,31 @@ console.log("server Response" ,data);
               >
                 Password
               </label>
-              <div className="mt-2">
+              <div className="mt-2 block">
                 <input
                   onChange={handleChange}
-                  type="password"
+                  type={!showpassword ? "password" : "text"}
                   name="password"
                   id="password"
                   autoComplete="password"
                   required
                   className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                 />
+                <div onClick={() => setShowpassword(!showpassword)}>
+                  {showpassword ? <IoEyeOutline /> : <IoEyeOffOutline />}
+                </div>
               </div>
             </div>
 
             <div>
               <button
-              onSubmit={handleSubmit}
                 type="submit"
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
                 Sign in
               </button>
             </div>
-          </htmlForm>
+          </form>
 
           <p className="mt-10 text-center text-sm/6 text-gray-500">
             Not a member?
