@@ -2,10 +2,10 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Nav from "react-bootstrap/Nav";
 
-
 import logo from "../../assets/logo.webp";
 import SignUp from "../SignUp/SignUp.jsx";
 import Hero from "../../Components/Hero/Hero.jsx";
+import SignIn from "../SignIn/SignIn.jsx";
 
 const Navbar = () => {
   return (
@@ -21,21 +21,25 @@ const Navbar = () => {
             </a>
 
             <div className="flex gap-1 md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-              <Nav.Link as={Link} to="/signup">
+              <Link to="/signup">
+                {" "}
+                {/* ✅ Ensure Link is used properly */}
                 <button
                   type="button"
-                  className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                  className="text-blue-700 underline hover:bg-blue-200 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                 >
-                  signUp
+                  Create an account
                 </button>
-              </Nav.Link>
-
-              <button
-                type="button"
-                className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-              >
-                signIn
-              </button>
+              </Link>
+              OR
+              <Link to="/signin">
+                <button
+                  type="button"
+                  className="text-blue-700 underline  hover:bg-blue-200  font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                >
+                  sign In
+                </button>
+              </Link>
               <button
                 data-collapse-toggle="navbar-sticky"
                 type="button"
@@ -62,7 +66,7 @@ const Navbar = () => {
               </button>
             </div>
 
-            <div
+            {/* <div
               className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
               id="navbar-sticky"
             >
@@ -97,21 +101,15 @@ const Navbar = () => {
                     Branding
                   </a>
                 </li>
-                {/* <li>
-                <a
-                  href="#"
-                  className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 "
-                >
-                 <CiSearch />
-                </a>
-              </li> */}
+                
               </ul>
-            </div>
+            </div> */}
           </div>
         </nav>
         <Routes>
+          <Route path="/" element={<Hero />} />
           <Route path="/signup" element={<SignUp />} />
-          <Route path="/hero" element={<Hero />} />
+          <Route path="/signin" element={<SignIn />} />
         </Routes>
       </Router>
     </div>

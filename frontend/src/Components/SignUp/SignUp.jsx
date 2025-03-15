@@ -1,7 +1,9 @@
 import React from "react";
 import logo from "../../assets/logo.webp";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
+import {toast} from 'react-toastify'
 
 const SignUp = () => {
   const [showpassword, setShowpassword] = useState(true);
@@ -11,22 +13,22 @@ const SignUp = () => {
     email: "",
     password: "",
   });
+
+  //function for getting data
   const handleChange = (e) => {
-    // setFormData((preData) => ({
-    //   ...preData,
-    //   [e.target.name]: e.target.value,
-    // }));
     setFormData((prevState) => {
       const updatedData = { ...prevState, [e.target.name]: e.target.value };
       console.log("Updated Form Data:", updatedData); // ✅ Check if name updates
       return updatedData;
     });
   };
+
+  const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       if (!formData.name || !formData.email || !formData.password) {
-        console.error("❌ Error: All fields are required!");
+        toast.error("❌ Error: All fields are required!");
         return;
       }
       const response = await fetch("http://localhost:3000/api/user", {
@@ -34,11 +36,21 @@ const SignUp = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
-
       const data = await response.json();
       console.log("server Response", data);
+      if (data) {
+       
+        navigate("/signin");
+      } else {
+        
+      }
+      if (!response.ok) {
+        toast.error(data.message,"Failed to register. Please try again.");
+      }
+
     } catch (e) {
-      console.error(e.message);
+      console.log(e.message);
+      
     }
   };
 
@@ -136,6 +148,7 @@ const SignUp = () => {
           </p>
         </div>
       </div>
+     
     </>
   );
 };
