@@ -5,10 +5,12 @@ import userSchema from "../Schema/userSchema.js";
 import User from '../Model/userModel.js'
 import bcrypt from 'bcrypt'
 import chalk from "chalk";
+import jwt from 'jsonwebtoken'
+import 'dotenv/config'
 
 
 //create user
-export const createUser = async (req, res) => {
+const createUser = async (req, res) => {
     try {
 
 
@@ -37,7 +39,7 @@ export const createUser = async (req, res) => {
     }
 }
 //get allusers
-export const getAllUsers = async (req, res) => {
+const getAllUsers = async (req, res) => {
     try {
         const userCollection = await User.find()
         res.status(200).json({
@@ -57,7 +59,7 @@ export const getAllUsers = async (req, res) => {
 
 //update users
 
-export const updateUser = async (req, res) => {
+const updateUser = async (req, res) => {
     try {
         const { id } = req.params
         const updateUser = await User.findOneAndUpdate({ id: id, }, { ...res.body }, { new: true }) //id se us id pr jaiga jo db se generate howi he ,us ka sara data delete kry ga ,ur phir new data la kr dega 
@@ -77,7 +79,7 @@ export const updateUser = async (req, res) => {
     }
 }
 //delete user 
-export const deleteUser = async (req, res) => {
+const deleteUser = async (req, res) => {
     try {
         const { id } = req.params
         const deleteUser = User.findOneAndDelete(id)
@@ -101,7 +103,7 @@ export const deleteUser = async (req, res) => {
 }
 
 //getting one user
-export const singleUser = async (req, res) => {
+const loginUser = async (req, res) => {
     try {
         if (!req.body.email || req.body.password) {
             console.log(chalk.bgCyan.blue("email or password not found"));
@@ -111,29 +113,36 @@ export const singleUser = async (req, res) => {
                 message: "enter correct credentials"
             })
         }
-        const user = await User.findOne({ email: req.body.email })
 
-        const compare = await bcrypt.compare(req.body.password, user.password)
+        //first validating through email
+        const user = await User.findOne({ email: req.body.email })
         if (!user) {
             return res.status(400).json({
                 success: false,
                 message: "invalid credentials"
             })
         }
+        //then match pasword
+        const compare = await bcrypt.compare(req.body.password, user.password)
         if (!compare) {
             return res.body.status(401).json({
                 success: false,
                 message: "unauthorized user"
             })
         }
+
+        var token = jwt.sign({ ...user }, process.env.JWT_SECRETKEY)
+        console.log(chalk.bgBlue.white(token));
+
         res.status(200).json({
             success: true,
             message: "user Sign in",
-            user: user.id
+            user: user.id,
+            token
         })
     } catch {
         console.log(chalk.bgRed.white(error));
         res.status(500).json({ message: "Internal server error", error });
     }
 }
-
+export { deleteUser, createUser, loginUser, updateUser, getAllUsers }

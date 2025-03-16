@@ -2,6 +2,7 @@ import express from 'express';
 const app = express()
 import cors from 'cors'
 import userRoutes from './Routes/userRoutes.js'
+import userCart from './Routes/userRoutes.js'
 import connectedToDb from './db/db.js'
 
 
@@ -15,7 +16,8 @@ app.use(express.json())
 connectedToDb()
 
 //middleware
-app.use('/api', userRoutes)
+app.use('/api/auth', userRoutes)
+app.use('/api',userCart)
 
 
 app.listen(3000, () => {

@@ -1,9 +1,46 @@
 import React from "react";
-import logo from '../../assets/logo.webp'
+import logo from "../../assets/logo.webp";
+import { useNavigate } from "react-router-dom";
+import {useState} from 'react'
+import {toast }from 'react-toastify'
+
 const SignIn = () => {
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+  const navigate = useNavigate();
+  const handleChange = async (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      // if (!formData.name || !formData.email || !formData.password) {
+      //   toast.error("❌ Error: All fields are required!");
+      //   return;
+      // }
+      const response = await fetch("http://localhost:3000/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+      const data = await response.json();
+     console.log("server Response", data);
+
+      if (response.ok) {
+        toast.success(data.message);
+        navigate("/");
+      }
+    }
+     catch (e) {
+      console.log(e.message);
+      toast.error(data.message || "Failed to register. Please try again.");
+    }
+  };
   return (
     <>
-      {" "}
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8  my-10">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img className="mx-auto h-10 w-auto" src={logo} alt="Your Company" />
@@ -11,9 +48,8 @@ const SignIn = () => {
             Sign in to your account
           </h2>
         </div>
-
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form action="#" method="POST" className="space-y-6">
+          <form action="#" method="POST" className="space-y-6" onSubmit={handleSubmit}>
             <div>
               <label
                 htmlFor="email"
@@ -23,6 +59,7 @@ const SignIn = () => {
               </label>
               <div className="mt-2">
                 <input
+                onChange={handleChange}
                   id="email"
                   name="email"
                   type="email"
@@ -52,6 +89,7 @@ const SignIn = () => {
               </div>
               <div className="mt-2">
                 <input
+                onChange={handleChange}
                   id="password"
                   name="password"
                   type="password"
@@ -64,6 +102,7 @@ const SignIn = () => {
 
             <div>
               <button
+
                 type="submit"
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >

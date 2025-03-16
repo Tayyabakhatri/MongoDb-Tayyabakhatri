@@ -3,7 +3,7 @@ import logo from "../../assets/logo.webp";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
-import {toast} from 'react-toastify'
+import { toast } from "react-toastify";
 
 const SignUp = () => {
   const [showpassword, setShowpassword] = useState(true);
@@ -31,26 +31,24 @@ const SignUp = () => {
         toast.error("❌ Error: All fields are required!");
         return;
       }
-      const response = await fetch("http://localhost:3000/api/user", {
+      const response = await fetch("http://localhost:3000/api/auth/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
+      console.log(response);
+      
       const data = await response.json();
       console.log("server Response", data);
-      if (data) {
-       
-        navigate("/signin");
-      } else {
-        
-      }
-      if (!response.ok) {
-        toast.error(data.message,"Failed to register. Please try again.");
-      }
 
-    } catch (e) {
+      if (response.ok) {
+        toast.success(data.message);
+        navigate("/login");
+      }
+    }
+     catch (e) {
       console.log(e.message);
-      
+      toast.error(data.message || "Failed to register. Please try again.");
     }
   };
 
@@ -148,7 +146,6 @@ const SignUp = () => {
           </p>
         </div>
       </div>
-     
     </>
   );
 };
