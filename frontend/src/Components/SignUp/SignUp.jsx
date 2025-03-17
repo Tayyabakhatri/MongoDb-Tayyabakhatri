@@ -43,7 +43,7 @@ const SignUp = () => {
 
       if (response.ok) {
         toast.success(data.message);
-        navigate("/login");
+        navigate("/items");
       }
     }
      catch (e) {

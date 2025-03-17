@@ -31,7 +31,7 @@ const SignIn = () => {
 
       if (response.ok) {
         toast.success(data.message);
-        navigate("/");
+        navigate("/hero");
       }
     }
      catch (e) {

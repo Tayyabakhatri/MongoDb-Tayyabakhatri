@@ -1,5 +1,6 @@
 import React from "react";
 import hero from "../../assets/hero.webp";
+import Swiper  from "../Swiper/Swiper.jsx";
 
 // import {BrowserRouter as Router,Routes,Route, Link } from "react-router-dom";
 
@@ -50,6 +51,7 @@ const Hero = () => {
           </div>
         </div>
       </section>
+      <Swiper/>
       
     </>
   );
