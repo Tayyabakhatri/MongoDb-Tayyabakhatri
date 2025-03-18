@@ -7,7 +7,8 @@ import { toast } from "react-toastify";
 
 const SignUp = () => {
   const [showpassword, setShowpassword] = useState(true);
-
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -23,7 +24,6 @@ const SignUp = () => {
     });
   };
 
-  const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -36,19 +36,21 @@ const SignUp = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
-      console.log(response);
-      
+      setLoading(true);
+
       const data = await response.json();
       console.log("server Response", data);
 
       if (response.ok) {
         toast.success(data.message);
-        navigate("/items");
+        navigate("/login");
+      } else {
+        toast.error(data.message || "An error occurred while signing up");
       }
-    }
-     catch (e) {
+    } catch (e) {
+      // setLoading(false)
       console.log(e.message);
-      toast.error(data.message || "Failed to register. Please try again.");
+      toast.error(e.message || "Failed to register. Please try again.");
     }
   };
 
@@ -128,9 +130,10 @@ const SignUp = () => {
             <div>
               <button
                 type="submit"
+                disabled={loading}
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
-                Sign in
+                {loading ? "signing Up..." : "Sign Up"}
               </button>
             </div>
           </form>

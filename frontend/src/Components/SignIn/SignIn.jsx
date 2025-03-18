@@ -1,42 +1,55 @@
 import React from "react";
 import logo from "../../assets/logo.webp";
 import { useNavigate } from "react-router-dom";
-import {useState} from 'react'
-import {toast }from 'react-toastify'
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { login } from "../../Reducers/authSlice.js";
+import { toast } from "react-toastify";
 
 const SignIn = () => {
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
   const navigate = useNavigate();
+
   const handleChange = async (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
+  const dispatch = useDispatch();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(formData);
+
     try {
-      // if (!formData.name || !formData.email || !formData.password) {
-      //   toast.error("❌ Error: All fields are required!");
-      //   return;
-      // }
       const response = await fetch("http://localhost:3000/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
+      setLoading(true);
       const data = await response.json();
-     console.log("server Response", data);
+      console.log("server Response", data);
 
       if (response.ok) {
         toast.success(data.message);
-        navigate("/hero");
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("userId", data.userId);
+        dispatch(login({
+          token:data.token,
+          userid:data.id
+        }));
+        navigate("/items");
       }
-    }
-     catch (e) {
+    } catch (e) {
       console.log(e.message);
-      toast.error(data.message || "Failed to register. Please try again.");
+      toast.error(e.message || "Failed to register. Please try again.");
     }
   };
   return (
@@ -49,7 +62,12 @@ const SignIn = () => {
           </h2>
         </div>
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form action="#" method="POST" className="space-y-6" onSubmit={handleSubmit}>
+          <form
+            action="#"
+            method="POST"
+            className="space-y-6"
+            onSubmit={handleSubmit}
+          >
             <div>
               <label
                 htmlFor="email"
@@ -59,7 +77,7 @@ const SignIn = () => {
               </label>
               <div className="mt-2">
                 <input
-                onChange={handleChange}
+                  onChange={handleChange}
                   id="email"
                   name="email"
                   type="email"
@@ -89,7 +107,7 @@ const SignIn = () => {
               </div>
               <div className="mt-2">
                 <input
-                onChange={handleChange}
+                  onChange={handleChange}
                   id="password"
                   name="password"
                   type="password"
@@ -102,11 +120,10 @@ const SignIn = () => {
 
             <div>
               <button
-
                 type="submit"
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
-                Sign in
+                {loading ? "Logging In..." : "Log In"}
               </button>
             </div>
           </form>

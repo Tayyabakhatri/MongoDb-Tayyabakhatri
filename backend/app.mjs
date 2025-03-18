@@ -4,6 +4,7 @@ import cors from 'cors'
 import userRoutes from './Routes/userRoutes.js'
 import userCart from './Routes/userRoutes.js'
 import connectedToDb from './db/db.js'
+import authentication from './MiddleWare/authentication.js';
 
 
 // const port = process.env.PORT || 3000
@@ -17,7 +18,7 @@ connectedToDb()
 
 //middleware
 app.use('/api/auth', userRoutes)
-app.use('/api',userCart)
+app.use('/api/cart',authentication,userCart)
 
 
 app.listen(3000, () => {

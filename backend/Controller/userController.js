@@ -12,6 +12,9 @@ import 'dotenv/config'
 //create user
 const createUser = async (req, res) => {
     try {
+console.log("received body", req.body
+
+);
 
 
         const validatedUser = await userSchema.validateAsync(req.body)
@@ -105,10 +108,10 @@ const deleteUser = async (req, res) => {
 //getting one user
 const loginUser = async (req, res) => {
     try {
-        if (!req.body.email || req.body.password) {
+        if (!req.body.email || !req.body.password) {
             console.log(chalk.bgCyan.blue("email or password not found"));
 
-            res.status(400).json({
+          return  res.status(400).json({
                 success: false,
                 message: "enter correct credentials"
             })
@@ -125,7 +128,7 @@ const loginUser = async (req, res) => {
         //then match pasword
         const compare = await bcrypt.compare(req.body.password, user.password)
         if (!compare) {
-            return res.body.status(401).json({
+            return res.status(401).json({
                 success: false,
                 message: "unauthorized user"
             })
@@ -140,7 +143,7 @@ const loginUser = async (req, res) => {
             user: user.id,
             token
         })
-    } catch {
+    } catch(error) {
         console.log(chalk.bgRed.white(error));
         res.status(500).json({ message: "Internal server error", error });
     }
