@@ -38,12 +38,14 @@ const SignIn = () => {
       console.log("server Response", data);
 
       if (response.ok) {
+        console.log(data);
+        
         toast.success(data.message);
         localStorage.setItem("token", data.token);
-        localStorage.setItem("userId", data.userId);
+        localStorage.setItem("userId", data.user);
         dispatch(login({
           token:data.token,
-          userid:data.id
+          userid:data.user
         }));
         navigate("/items");
       }

@@ -2,11 +2,18 @@ import React from "react";
 import vegetable from "../../assets/categories/pakistan-online-grocery.jpg";
 import fruits from "../../assets/categories/fruits.jpg";
 import meat from "../../assets/categories/meat.jpg";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const Items = () => {
+  const navigate= useNavigate()
+  const isAuthenticated = useSelector((state) => state.auth);
   return (
-    <>
-      <div className="my-20">
+  
+      <>
+      {isAuthenticated.isAuthenticated?(
+        <>
+           <div className="my-20">
         <p className="text-center font-bold text-6xl text-[#333333]">SHOP</p>
       </div>
       <div className="flex my-10  ">
@@ -15,18 +22,24 @@ const Items = () => {
             <a href="#">
               <img className="rounded-lg" src={vegetable} alt="" />
             </a>
-            <span className="absolute bottom-8 left-35 text-white text-2xl">GROCERY</span>
+            <span className="absolute bottom-8 left-35 text-white text-2xl">
+              GROCERY
+            </span>
           </div>
           <div className="relative m-3 max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 ">
             <a href="#">
               <img class="rounded-lg" src={fruits} alt="" />
             </a>
-            <span className="absolute bottom-8 left-35 text-white text-2xl">FRUITS</span>
+            <span className="absolute bottom-8 left-35 text-white text-2xl">
+              FRUITS
+            </span>
           </div>
           <div className="relative m-3 max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 ">
             <a href="#">
               <img class="rounded-lg" src={meat} alt="" />
-              <span className="absolute bottom-8 left-35 text-white text-2xl">MEAT</span>
+              <span className="absolute bottom-8 left-35 text-white text-2xl">
+                MEAT
+              </span>
             </a>
           </div>
         </div>
@@ -37,18 +50,24 @@ const Items = () => {
             <a href="#">
               <img className="rounded-lg" src={vegetable} alt="" />
             </a>
-            <span className="absolute bottom-8 left-35 text-white text-2xl">GROCERY</span>
+            <span className="absolute bottom-8 left-35 text-white text-2xl">
+              GROCERY
+            </span>
           </div>
           <div className="relative m-3 max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 ">
             <a href="#">
               <img class="rounded-lg" src={fruits} alt="" />
             </a>
-            <span className="absolute bottom-8 left-35 text-white text-2xl">FRUITS</span>
+            <span className="absolute bottom-8 left-35 text-white text-2xl">
+              FRUITS
+            </span>
           </div>
           <div className="relative m-3 max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 ">
             <a href="#">
               <img class="rounded-lg" src={meat} alt="" />
-              <span className="absolute bottom-8 left-35 text-white text-2xl">MEAT</span>
+              <span className="absolute bottom-8 left-35 text-white text-2xl">
+                MEAT
+              </span>
             </a>
           </div>
         </div>
@@ -59,24 +78,34 @@ const Items = () => {
             <a href="#">
               <img className="rounded-lg" src={vegetable} alt="" />
             </a>
-            <span className="absolute bottom-8 left-35 text-white text-2xl">GROCERY</span>
+            <span className="absolute bottom-8 left-35 text-white text-2xl">
+              GROCERY
+            </span>
           </div>
           <div className="relative m-3 max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 ">
             <a href="#">
               <img class="rounded-lg" src={fruits} alt="" />
             </a>
-            <span className="absolute bottom-8 left-35 text-white text-2xl">FRUITS</span>
+            <span className="absolute bottom-8 left-35 text-white text-2xl">
+              FRUITS
+            </span>
           </div>
           <div className="relative m-3 max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 ">
             <a href="#">
               <img class="rounded-lg" src={meat} alt="" />
-              <span className="absolute bottom-8 left-35 text-white text-2xl">MEAT</span>
+              <span className="absolute bottom-8 left-35 text-white text-2xl">
+                MEAT
+              </span>
             </a>
           </div>
         </div>
-      </div>
+      </div></>
+      ):(
+        navigate('/signup')
+      )}
+   
     </>
-  );
-};
+);
+}
 
 export default Items;

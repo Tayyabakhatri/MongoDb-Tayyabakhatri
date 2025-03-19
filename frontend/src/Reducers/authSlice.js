@@ -9,11 +9,18 @@ export const authSlice = createSlice({
     initialState,
     reducers: {
         login: (state, action) => {
+            state.token = action.payload.token,
+                state.userId = action.payload.userId,
+                state.isAuthenticated = true
+        },
+        logout: (state) => {
+            // state.user=null
+            localStorage.removeItem('token'),
+                localStorage.removeItem('userId')
+            state.isAuthenticated = false
+        },
+    },
 
-        }
-    },
-    logout: (state) => {
-    },
 })
 export const { login, logout } = authSlice.actions
 export default authSlice.reducer;

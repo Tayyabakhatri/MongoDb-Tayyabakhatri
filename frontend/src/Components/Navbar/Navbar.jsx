@@ -1,13 +1,16 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Nav from "react-bootstrap/Nav";
-
+import { useSelector } from "react-redux";
 import logo from "../../assets/logo.webp";
 import SignUp from "../SignUp/SignUp.jsx";
 import Hero from "../../Components/Hero/Hero.jsx";
 import SignIn from "../SignIn/SignIn.jsx";
 
 const Navbar = () => {
+  const isAuthenticated = useSelector((state) => state.auth);
+  console.log(isAuthenticated?.isAuthenticated);
+
   return (
     <div>
       <nav className=" dark:bg-gray-900 fixed w-full z-20 top-0 start-0 shadow-xl bg-white opacity-85  border-gray-200 dark:border-gray-600">
@@ -20,27 +23,21 @@ const Navbar = () => {
           </a>
 
           <div className="flex gap-1 md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-            <Link to="/signup">
-              {" "}
-              {/* ✅ Ensure Link is used properly */}
-              <button
-                type="button"
-                className="text-black  hover:bg-blue-200 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-              >
-                Create an account
-              </button>
-            </Link>
-            <p className="text-black  font-medium rounded-lg text-sm py-2 text-center">
-              Or
-            </p>
-            <Link to="/signin">
-              <button
-                type="button"
-                className="text-black   hover:bg-blue-200  font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-              >
-                log In
-              </button>
-            </Link>
+            {isAuthenticated.isAuthenticated ? (
+              <Link to="/logout" text="Logout">
+                Logout
+              </Link>
+            ) : (
+              <>
+                <Link to="/signup" text="SIGNUP" className="mx-3">
+                  SIGNUP
+                </Link>
+                <Link to="/signin" text="LOGIN">
+                  LOGIN
+                </Link>
+              </>
+            )}
+
             <button
               data-collapse-toggle="navbar-sticky"
               type="button"
@@ -72,9 +69,6 @@ const Navbar = () => {
             id="navbar-sticky"
           >
             <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-              {/* <Nav.Link as={Link} to={"/"}>
-                  Website
-                </Nav.Link> */}
               <li>
                 <Link to={"/"}>Dashboard</Link>
               </li>
@@ -82,7 +76,7 @@ const Navbar = () => {
                 <Link to={"/items"}>Shop</Link>
               </li> */}
               <li>
-               <Link to={"/items"}>Shop</Link>
+                <Link to={"/items"}>Shop</Link>
               </li>
               <li>
                 <a
