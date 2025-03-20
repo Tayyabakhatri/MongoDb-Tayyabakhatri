@@ -12,9 +12,7 @@ import 'dotenv/config'
 //create user
 const createUser = async (req, res) => {
     try {
-console.log("received body", req.body
-
-);
+        console.log("received body", req.body);
 
 
         const validatedUser = await userSchema.validateAsync(req.body)
@@ -23,13 +21,14 @@ console.log("received body", req.body
         const newUser = await new User({ ...validatedUser, password: password });
         await newUser.save();
 
+
         res.status(201).json({
             message: "user has created",
             user: newUser
         })
 
     } catch (err) {
-        if (err.code === 11000) {
+        if (err?.code === 11000) {
             return res.status(409).json({
                 message: "this email is in use",
                 error: err.message
@@ -111,7 +110,7 @@ const loginUser = async (req, res) => {
         if (!req.body.email || !req.body.password) {
             console.log(chalk.bgCyan.blue("email or password not found"));
 
-          return  res.status(400).json({
+            return res.status(400).json({
                 success: false,
                 message: "enter correct credentials"
             })
@@ -141,9 +140,9 @@ const loginUser = async (req, res) => {
             success: true,
             message: "user Sign in",
             user: user.id,
-            token
+            token,
         })
-    } catch(error) {
+    } catch (error) {
         console.log(chalk.bgRed.white(error));
         res.status(500).json({ message: "Internal server error", error });
     }

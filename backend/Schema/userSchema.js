@@ -1,9 +1,14 @@
 import Joi from 'joi'
 
 //Validation
-const userSchema = Joi.object().keys({
-    name: Joi.string().min(3).required(),
-    email: Joi.string().min(6).email().required(),
-    password: Joi.string().min(8).required(),
+const userSchema = Joi.object({
+    username: Joi.string().alphanum().required(),
+
+  password: Joi.string().pattern(new RegExp("^[a-zA-Z0-9]{3,30}$")).required(),
+
+  email: Joi.string().email({
+    minDomainSegments: 2,
+    tlds: { allow: ["com", "net"] },
+  }).required(),
 });
 export default userSchema

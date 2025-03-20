@@ -39,14 +39,16 @@ const SignIn = () => {
 
       if (response.ok) {
         console.log(data);
-        
+
         toast.success(data.message);
         localStorage.setItem("token", data.token);
         localStorage.setItem("userId", data.user);
-        dispatch(login({
-          token:data.token,
-          userid:data.user
-        }));
+        dispatch(
+          login({
+            token: data.token,
+            userid: data.user,
+          })
+        );
         navigate("/items");
       }
     } catch (e) {
@@ -70,6 +72,7 @@ const SignIn = () => {
             className="space-y-6"
             onSubmit={handleSubmit}
           >
+           
             <div>
               <label
                 htmlFor="email"

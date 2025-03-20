@@ -5,10 +5,10 @@ import Hero from "./Components/Hero/Hero.jsx";
 import Items from "./Components/Items/Items.jsx";
 import SignUp from "./Components/SignUp/SignUp.jsx";
 import SignIn from "./Components/SignIn/SignIn.jsx";
-
+import LogOut from "./Components/LogOut/LogOut.jsx";
+import Contact from "./Components/Pages/Contact.jsx";
 import {  BrowserRouter, Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-import LogOut from "./Components/LogOut/LogOut.jsx";
 
 function App() {
   return (
@@ -32,6 +32,7 @@ function App() {
           <Route path="/signin" element={<SignIn />} />
           <Route path="/items" element={<Items/>}/>
           <Route path="/logout" element ={<LogOut/>}/>
+          <Route path="/contact" element={<Contact/>}/>
         </Routes>
       </BrowserRouter>
     </>

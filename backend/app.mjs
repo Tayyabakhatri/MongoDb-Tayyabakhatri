@@ -18,7 +18,7 @@ connectedToDb()
 
 //middleware
 app.use('/api/auth', userRoutes)
-app.use('/api/cart',authentication,userCart)
+app.use('/api/cart',userCart)
 
 
 app.listen(3000, () => {

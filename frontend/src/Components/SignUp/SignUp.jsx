@@ -10,7 +10,7 @@ const SignUp = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    name: "",
+    username: "",
     email: "",
     password: "",
   });
@@ -27,7 +27,7 @@ const SignUp = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      if (!formData.name || !formData.email || !formData.password) {
+      if (!formData.username || !formData.email || !formData.password) {
         toast.error("❌ Error: All fields are required!");
         return;
       }
@@ -43,10 +43,11 @@ const SignUp = () => {
 
       if (response.ok) {
         toast.success(data.message);
-        navigate("/login");
-      } else {
-        toast.error(data.message || "An error occurred while signing up");
       }
+      navigate("/signin");
+      // else {
+      //   toast.error(data.message || "An error occurred while signing up");
+      // }
     } catch (e) {
       // setLoading(false)
       console.log(e.message);
@@ -68,7 +69,7 @@ const SignUp = () => {
           <form className="space-y-6" onSubmit={handleSubmit} method="POST">
             <div>
               <label
-                htmlFor="name"
+                htmlFor="username"
                 className="block text-sm/6 font-medium text-gray-900"
               >
                 Your Name
@@ -77,8 +78,8 @@ const SignUp = () => {
                 <input
                   onChange={handleChange}
                   type="text"
-                  name="name"
-                  id="name"
+                  name="username"
+                  id="username"
                   required
                   className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                 />
