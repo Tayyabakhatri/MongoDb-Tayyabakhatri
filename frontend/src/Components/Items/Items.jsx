@@ -64,7 +64,7 @@ const Items = () => {
           </div>
           <div className="relative m-3 max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 ">
             <a href="#">
-              <img class="rounded-lg" src={meat} alt="" />
+              <img className="rounded-lg" src={meat} alt="" />
               <span className="absolute bottom-8 left-35 text-white text-2xl">
                 MEAT
               </span>

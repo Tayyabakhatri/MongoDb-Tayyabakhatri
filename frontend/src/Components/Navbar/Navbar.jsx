@@ -1,13 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import Nav from "react-bootstrap/Nav";
 import { useSelector } from "react-redux";
 import logo from "../../assets/logo.webp";
-import SignUp from "../SignUp/SignUp.jsx";
-import Hero from "../../Components/Hero/Hero.jsx";
-import SignIn from "../SignIn/SignIn.jsx";
+
 
 const Navbar = () => {
+  const[isOpen,setIsOpen ]=useState(false)
+  const toggleMenu=()=>{
+    setIsOpen(!isOpen)
+  }
   const isAuthenticated = useSelector((state) => state.auth);
   console.log(isAuthenticated?.isAuthenticated);
 
@@ -72,12 +73,12 @@ const Navbar = () => {
               <li>
                 <Link to={"/"}>Dashboard</Link>
               </li>
-             
+
               <li>
                 <Link to={"/items"}>Shop</Link>
               </li>
               <li>
-              <Link to={"/contact"}>Contact us</Link>
+                <Link to={"/contact"}>Contact us</Link>
               </li>
               <li>
                 <a

@@ -141,10 +141,43 @@ const loginUser = async (req, res) => {
             message: "user Sign in",
             user: user.id,
             token,
+            role:user.role
         })
     } catch (error) {
         console.log(chalk.bgRed.white(error));
         res.status(500).json({ message: "Internal server error", error });
     }
 }
-export { deleteUser, createUser, loginUser, updateUser, getAllUsers }
+
+const isAdmin = async (req, res) => {
+    try {
+        const { role, userId } = await req.user
+        if (role !== "admin") {
+            console.log(chalk.bgPurple.yellow('user is not an admin'));
+            return res.status(404).json({
+                success: false,
+                message: "Unauthorized(not an admin)",
+                isAdmin: false
+            })
+
+        }
+        console.log(chalk.bgBlueBright.yellow(`user is an admin ,user ID is  ${userId} user Role is ${role}`));
+        return res.status(200).json({
+            success: true,
+            message: "user is an admin",
+            isAdmin: true,
+            role:"admin"
+        })
+
+
+    } catch (error) {
+        console.log(chalk.bgWhite.black(error.message));
+        return req.status(500).json({
+            message: "internal server error"
+        })
+    }
+}
+
+
+
+export { deleteUser, createUser, loginUser, updateUser, getAllUsers, isAdmin }

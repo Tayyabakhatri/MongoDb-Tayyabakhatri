@@ -9,7 +9,12 @@ import authentication from './MiddleWare/authentication.js';
 
 // const port = process.env.PORT || 3000
 
-app.use(cors())
+app.use(cors({
+    origin:['http://localhost:5173','http://localhost:5174'],
+    methods:["GET","PUT",'POST',"DELETE"],
+    credentials: true,
+    allowedHeaders:["Content-Type","Authorization"]
+}))
 app.use(express.json())
 
 

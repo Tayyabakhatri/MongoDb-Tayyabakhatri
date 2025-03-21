@@ -1,15 +1,54 @@
-
-import React from "react";
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { FaHome, FaUsers, FaChartBar, FaCog, FaBars } from "react-icons/fa";
 
-export default function AdminDashboard() {
+function AdminDashboard() {
   const [isSidebarOpen, setSidebarOpen] = useState(true);
+  const navigate = useNavigate();
+  
+  const adminAccess = async () => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      console.log("Unauthorized ,No token available");
+      navigate("/login");
+    }
+    const API = "http://localhost:3000/api";
+    try {
+      const response = await fetch(`${API}/auth/admin`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "content-Type":"application/json"
+        },
+        credentials: "include",
+      });
+      const data =await response.json();
+      console.log("admin", data);
+      if (!data.success || !data.isAdmin) {
+				console.error('❌ User is not an admin, redirecting to login...');
+				// localStorage.removeItem('authToken'); // 🔹 Remove invalid token
+				navigate('/signin');
+				return;
+			}
+    } catch (error) {
+      console.log("error checking admin status",error.message);
+      navigate('/signin')
+    }
+  };
+
+  useEffect(() => {
+    adminAccess();
+  },[]);
 
   return (
     <div className="flex h-screen bg-gray-100">
       {/* Sidebar */}
-      <div className={`bg-white p-5 shadow-lg ${isSidebarOpen ? "w-64" : "w-20"} transition-all duration-300`}>
+      <div
+        className={`bg-white p-5 shadow-lg ${
+          isSidebarOpen ? "w-64" : "w-20"
+        } transition-all duration-300`}
+      >
         <button onClick={() => setSidebarOpen(!isSidebarOpen)} className="mb-4">
           <FaBars className="h-6 w-6" />
         </button>
@@ -38,7 +77,11 @@ export default function AdminDashboard() {
         {/* Top Navbar */}
         <div className="mb-6 flex justify-between items-center bg-white p-4 rounded-lg shadow">
           <h1 className="text-xl font-semibold">Admin Dashboard</h1>
-          <input type="text" placeholder="Search..." className="border rounded px-3 py-1" />
+          <input
+            type="text"
+            placeholder="Search..."
+            className="border rounded px-3 py-1"
+          />
         </div>
 
         {/* Dashboard Cards */}
@@ -60,3 +103,4 @@ export default function AdminDashboard() {
     </div>
   );
 }
+export default AdminDashboard;

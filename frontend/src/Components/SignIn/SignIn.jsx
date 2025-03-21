@@ -1,7 +1,7 @@
 import React from "react";
 import logo from "../../assets/logo.webp";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState ,useEffect} from "react";
 import { useDispatch } from "react-redux";
 import { login } from "../../Reducers/authSlice.js";
 import { toast } from "react-toastify";
@@ -43,14 +43,28 @@ const SignIn = () => {
         toast.success(data.message);
         localStorage.setItem("token", data.token);
         localStorage.setItem("userId", data.user);
+        localStorage.setItem("role", data.role);
+        
+        if (data.role === "admin") {
+          toast.success("You are an admin");
+          navigate("/admin");
+        } else {
+          navigate("/");
+        }
         dispatch(
           login({
             token: data.token,
             userid: data.user,
           })
         );
-        navigate("/items");
+
+        // ✅ Navigate based on user role
+       
+      } else {
+        toast.error(data.message || "Invalid email or password");
       }
+
+      // navigate("/");
     } catch (e) {
       console.log(e.message);
       toast.error(e.message || "Failed to register. Please try again.");
@@ -72,7 +86,6 @@ const SignIn = () => {
             className="space-y-6"
             onSubmit={handleSubmit}
           >
-           
             <div>
               <label
                 htmlFor="email"

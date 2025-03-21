@@ -18,7 +18,11 @@ const databaseUserSchema = mongoose.Schema({
         type:String,
         default:"user",
         enum:['user','admin']
-    }
+    },
+	isCustomer:{
+		type:Boolean,
+		default:false
+	}
 })
 databaseUserSchema.index({email:1},{unique:true})
 const Users = mongoose.model("Users",databaseUserSchema)
