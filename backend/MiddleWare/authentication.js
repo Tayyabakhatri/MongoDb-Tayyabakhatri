@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken'
 import 'dotenv/config';
 import User from '../Model/userModel.js'
+import chalk from 'chalk'
 
 
 const authentication = async (req, res, next) => {
@@ -21,7 +22,7 @@ const authentication = async (req, res, next) => {
             const user = await User.findById(decoded._doc._id)
             console.log(chalk.bgGreen.red("database user --->", user));
             if (!user) {
-                return res.status({
+                return res.status(404).json({
                     success: false,
                     message: "Unauthorized,Token expired"
                 })

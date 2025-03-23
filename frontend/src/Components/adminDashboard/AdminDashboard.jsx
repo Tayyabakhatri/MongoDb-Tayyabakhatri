@@ -2,11 +2,14 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { FaHome, FaUsers, FaChartBar, FaCog, FaBars } from "react-icons/fa";
+import chalk from "chalk";
+import { Link } from "react-router-dom";
+import { IoIosSwitch } from "react-icons/io";
 
 function AdminDashboard() {
   const [isSidebarOpen, setSidebarOpen] = useState(true);
   const navigate = useNavigate();
-  
+
   const adminAccess = async () => {
     const token = localStorage.getItem("token");
     if (!token) {
@@ -19,27 +22,27 @@ function AdminDashboard() {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
-          "content-Type":"application/json"
+          "Content-Type": "application/json",
         },
         credentials: "include",
       });
-      const data =await response.json();
+      const data = await response.json();
       console.log("admin", data);
       if (!data.success || !data.isAdmin) {
-				console.error('❌ User is not an admin, redirecting to login...');
-				// localStorage.removeItem('authToken'); // 🔹 Remove invalid token
-				navigate('/signin');
-				return;
-			}
+        console.error("❌ User is not an admin, redirecting to login...");
+        // localStorage.removeItem('authToken'); // 🔹 Remove invalid token
+        navigate("/signin");
+        return;
+      }
     } catch (error) {
-      console.log("error checking admin status",error.message);
-      navigate('/signin')
+      console.log("error checking admin status", error.message);
+      navigate("/signin");
     }
   };
 
   useEffect(() => {
     adminAccess();
-  },[]);
+  }, []);
 
   return (
     <div className="flex h-screen bg-gray-100">
@@ -68,6 +71,12 @@ function AdminDashboard() {
           <li className="flex items-center space-x-2">
             <FaCog className="h-5 w-5" />
             {isSidebarOpen && <span>Settings</span>}
+          </li>
+          <li>
+            <Link to="/" className="flex space-x-2">
+              <IoIosSwitch className="h-5 w-5" />
+              {isSidebarOpen && <span>Switch to user Mode</span>}
+            </Link>
           </li>
         </ul>
       </div>

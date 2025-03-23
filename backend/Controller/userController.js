@@ -151,9 +151,12 @@ const loginUser = async (req, res) => {
 
 const isAdmin = async (req, res) => {
     try {
-        const { role, userId } = await req.user
+        console.log(req.user);
+        
+        const { role, id } =  req.user
+        console.log("🔹 Checking admin status for:", id, role);
         if (role !== "admin") {
-            console.log(chalk.bgPurple.yellow('user is not an admin'));
+            console.log(chalk.bgRed.yellow('user is not an admin'));
             return res.status(404).json({
                 success: false,
                 message: "Unauthorized(not an admin)",
@@ -161,7 +164,7 @@ const isAdmin = async (req, res) => {
             })
 
         }
-        console.log(chalk.bgBlueBright.yellow(`user is an admin ,user ID is  ${userId} user Role is ${role}`));
+        console.log(chalk.bgBlue.yellow(`user is an admin ,user ID is  ${id} user Role is ${role}`));
         return res.status(200).json({
             success: true,
             message: "user is an admin",
