@@ -8,6 +8,15 @@ import { IoIosSwitch } from "react-icons/io";
 
 function AdminDashboard() {
   const [isSidebarOpen, setSidebarOpen] = useState(true);
+  //getting input from admin to upload images
+  const [product, setProduct] = useState({
+    name: "",
+    price: "",
+    description: "",
+    image: null,
+  });
+  //
+
   const navigate = useNavigate();
 
   const adminAccess = async () => {
@@ -44,6 +53,36 @@ function AdminDashboard() {
     adminAccess();
   }, []);
 
+  //uploading products as an admin functionality
+  const handleChangeInputs = (e) => {
+    const { name, value } = e.target;
+    setProduct({ ...product, [name]: value });
+  };
+  const handleImageChange = (e) => {
+    setProduct({ ...product, image: e.target.files[0] });
+  };
+  //handling submit
+  const handleSubmitData = async (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append("name", product.name);
+    formData.append("image", product.image);
+    formData.append("description", product.description);
+    formData.append("price", product.price);
+    try {
+      const response =await fetch("http://localhost:3000/api/cart/upload", {
+        method: "POST",
+        body:formData
+      });
+      const data = await response.json()
+      console.log("uploaded successfully",data);
+      
+    } catch(error) {
+      console.log("error uploading image",error.message);
+      
+    }
+  };
+
   return (
     <div className="flex h-screen bg-gray-100">
       {/* Sidebar */}
@@ -78,6 +117,49 @@ function AdminDashboard() {
               {isSidebarOpen && <span>Switch to user Mode</span>}
             </Link>
           </li>
+          <main className="flex-1 p-6 flex justify-center items-center bg-gray-100">
+            <div className="bg-white p-6 rounded-lg shadow-md w-96">
+              <h2 className="text-lg font-bold mb-4">Upload Product</h2>
+              <form className="space-y-4" onSubmit={handleSubmitData}>
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="Product Name"
+                  className="w-full p-2 border rounded"
+                  onChange={handleChangeInputs}
+                  required
+                />
+                <input
+                  type="number"
+                  name="price"
+                  placeholder="Product Price"
+                  className="w-full p-2 border rounded"
+                  onChange={handleChangeInputs}
+                  required
+                />
+                <textarea
+                  name="description"
+                  placeholder="Product Description"
+                  className="w-full p-2 border rounded"
+                  onChange={handleChangeInputs}
+                  required
+                />
+                <input
+                  type="file"
+                  accept="image/*"
+                  className="w-full p-2 border rounded"
+                  onChange={handleImageChange}
+                  required
+                />
+                <button
+                  type="submit"
+                  className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
+                >
+                  Upload
+                </button>
+              </form>
+            </div>
+          </main>
         </ul>
       </div>
 
