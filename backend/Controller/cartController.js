@@ -1,4 +1,4 @@
-export const getCart = async (req, res) => {
+export const uploadProduct = async (req, res) => {
     try {
         if (!req.file) {
             return res.status(400).json({

@@ -70,16 +70,17 @@ function AdminDashboard() {
     formData.append("description", product.description);
     formData.append("price", product.price);
     try {
-      const response =await fetch("http://localhost:3000/api/cart/upload", {
+      const response = await fetch("http://localhost:3000/api/cart/upload", {
         method: "POST",
-        body:formData
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: formData,
       });
-      const data = await response.json()
-      console.log("uploaded successfully",data);
-      
-    } catch(error) {
-      console.log("error uploading image",error.message);
-      
+      const data = await response.json();
+      console.log("uploaded successfully", data);
+    } catch (error) {
+      console.log("error uploading image", error.message);
     }
   };
 
@@ -117,50 +118,8 @@ function AdminDashboard() {
               {isSidebarOpen && <span>Switch to user Mode</span>}
             </Link>
           </li>
-          <main className="flex-1 p-6 flex justify-center items-center bg-gray-100">
-            <div className="bg-white p-6 rounded-lg shadow-md w-96">
-              <h2 className="text-lg font-bold mb-4">Upload Product</h2>
-              <form className="space-y-4" onSubmit={handleSubmitData}>
-                <input
-                  type="text"
-                  name="name"
-                  placeholder="Product Name"
-                  className="w-full p-2 border rounded"
-                  onChange={handleChangeInputs}
-                  required
-                />
-                <input
-                  type="number"
-                  name="price"
-                  placeholder="Product Price"
-                  className="w-full p-2 border rounded"
-                  onChange={handleChangeInputs}
-                  required
-                />
-                <textarea
-                  name="description"
-                  placeholder="Product Description"
-                  className="w-full p-2 border rounded"
-                  onChange={handleChangeInputs}
-                  required
-                />
-                <input
-                  type="file"
-                  accept="image/*"
-                  className="w-full p-2 border rounded"
-                  onChange={handleImageChange}
-                  required
-                />
-                <button
-                  type="submit"
-                  className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
-                >
-                  Upload
-                </button>
-              </form>
-            </div>
-          </main>
         </ul>
+        
       </div>
 
       {/* Main Content */}
@@ -189,6 +148,49 @@ function AdminDashboard() {
             <h2 className="text-lg font-semibold">Active Sessions</h2>
             <p className="text-2xl font-bold">320</p>
           </div>
+          <main className="flex-1 flex justify-center items-center bg-gray-100">
+          <div className="bg-white p-6 rounded-lg shadow">
+            <h2 className="text-lg font-bold mb-4">Upload Product</h2>
+            <form className="space-y-4" onSubmit={handleSubmitData}>
+              <input
+                type="text"
+                name="name"
+                placeholder="Product Name"
+                className="w-full p-2 border rounded"
+                onChange={handleChangeInputs}
+                required
+              />
+              <input
+                type="number"
+                name="price"
+                placeholder="Product Price"
+                className="w-full p-2 border rounded"
+                onChange={handleChangeInputs}
+                required
+              />
+              <textarea
+                name="description"
+                placeholder="Product Description"
+                className="w-full p-2 border rounded"
+                onChange={handleChangeInputs}
+                required
+              />
+              <input
+                type="file"
+                accept="image/*"
+                className="w-full p-2 border rounded"
+                onChange={handleImageChange}
+                required
+              />
+              <button
+                type="submit"
+                className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
+              >
+                Upload
+              </button>
+            </form>
+          </div>
+        </main>
         </div>
       </div>
     </div>

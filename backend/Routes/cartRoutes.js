@@ -2,11 +2,11 @@ import express from 'express'
 import multer from 'multer'
 import { CloudinaryStorage } from 'multer-storage-cloudinary'
 import cloudinary from '../cloudinaryConfige.js'
-import { getCart } from '../Controller/cartController.js'
+import { uploadProduct } from '../Controller/cartController.js'
 import authentication from '../MiddleWare/authentication.js'
 
 
-const router = express()
+const router = express.Router()
 
 const storage = new CloudinaryStorage({
     cloudinary: cloudinary,
@@ -19,6 +19,6 @@ const storage = new CloudinaryStorage({
 const upload = multer({ storage });
 
 // Correct Route (Using Upload Middleware)
-router.post("/upload", authentication, upload.single("image"), getCart);
+router.post("/upload", authentication, upload.single("image"), uploadProduct);
 
 export default router; // Export router properly

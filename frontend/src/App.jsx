@@ -26,7 +26,7 @@ function App() {
         pauseOnHover
       />
 
-      <Navbar />
+      {/* <Navbar /> */}
       <Routes>
         <Route path="/" element={<Hero />} />
         <Route path="/signup" element={<SignUp />} />
