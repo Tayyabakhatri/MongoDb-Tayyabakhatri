@@ -2,7 +2,7 @@ import express from 'express';
 const app = express()
 import cors from 'cors'
 import userRoutes from './Routes/userRoutes.js'
-import userCart from './Routes/userRoutes.js'
+import userCart from './Routes/cartRoutes.js'
 import connectedToDb from './db/db.js'
 
 

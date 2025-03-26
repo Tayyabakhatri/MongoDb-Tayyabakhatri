@@ -3,7 +3,7 @@ const cartSchema = mongoose.Schema({
     name:String,
     price:Number,
     description:String,
-    imageUrl:String
+    image:String
 })
 
 const productCart=mongoose.model("products",cartSchema)
