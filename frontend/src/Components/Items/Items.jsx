@@ -44,12 +44,24 @@ const Items = () => {
     fetchingProducts();
   }, []);
 
+  const handleProductClick = (product) => {
+    localStorage.setItem("productId", product._id);
+    localStorage.setItem("productName", product.name);
+    localStorage.setItem("productDescription", product.description);
+    localStorage.setItem("productPrice", product.price);
+    localStorage.setItem("productImage", product.image);
+    navigate(`/product/${product._id}`);
+  };
+
   return (
     <>
-      <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:mt-8">
-        {data.map(({ price, name, image, description, index }) => (
+      <div className="p-7 mt-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:mt-8">
+        {data.map(({ price, name, image, description, _id }) => (
           <div
-            key={index}
+            key={_id}
+            onClick={() =>
+              handleProductClick({ price, name, image, description })
+            }
             className="mx-auto w-full max-w-screen-xl xl:mt-20 xl:block"
           >
             <div className="space-y-6 overflow-hidden rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">

@@ -10,6 +10,7 @@ import Contact from "./Components/Pages/Contact.jsx";
 import AdminDashboard from "./Components/adminDashboard/AdminDashboard.jsx";
 import { Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+import ProductDetail from "./Components/Pages/ProductDetail.jsx";
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
         <Route path="/logout" element={<LogOut />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="/product/:id" element={<ProductDetail />} />
       </Routes>
     </>
   );
