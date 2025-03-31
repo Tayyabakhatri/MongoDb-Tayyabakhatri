@@ -3,7 +3,7 @@ import React from 'react'
 const Customers = ({ customers }) => {
     return (
         <div className="bg-[#485566] p-4 rounded-2xl shadow-md w-full mt-6">
-          <h2 className="text-xl font-bold text-white text-gray-800 mb-3">Customer Details</h2>
+          <h2 className="text-xl font-bold text-white  mb-3">Customer Details</h2>
           <div className="overflow-x-auto rounded-2xl">
             <table className="min-w-full bg-gray-400 rounded-lg shadow-md">
               <thead>
