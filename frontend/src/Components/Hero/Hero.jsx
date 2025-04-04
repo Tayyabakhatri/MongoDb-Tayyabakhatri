@@ -7,7 +7,7 @@ import Swiper from "../Swiper/Swiper.jsx";
 const Hero = () => {
   return (
     <>
-      <section className="bg-[#64b3d3] dark:bg-gray-900 mx-2">
+      <section className="bg-[#64b3d3] mx-2">
         <div className="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
           <div className="mr-auto place-self-center lg:col-span-7">
             <h1 className="max-w-2xl mb-4 md:mb-8 text-4xl text-[#333333] font-bold tracking-tight leading-15 md:leading-20 md:text-5xl xl:text-6xl dark:text-white">
@@ -24,7 +24,7 @@ const Hero = () => {
         </div>
       </section>
 
-      <section className="bg-[#efd645]  dark:bg-gray-900 my-20 mx-2">
+      <section className="bg-[#efd645]   my-20 mx-2">
         <div className="max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16">
           <p className="text-center text-white text-2xl">
             Welcome to [Your Shop Name], where shopping is always an adventure!

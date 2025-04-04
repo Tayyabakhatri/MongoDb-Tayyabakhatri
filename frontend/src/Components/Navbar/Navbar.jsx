@@ -8,12 +8,11 @@ const Navbar = () => {
   const isAuthenticated = useSelector((state) => state.auth);
   console.log(isAuthenticated?.isAuthenticated);
   console.log(isAuthenticated?.role);
-  
 
   return (
     <>
       <div>
-        <nav className=" dark:bg-gray-900 fixed w-full z-20 top-0 start-0 shadow-xl bg-white opacity-85  border-gray-200 dark:border-gray-600">
+        <nav className="fixed w-full z-20 top-0 start-0 shadow-xl bg-white opacity-85  border-gray-200 dark:border-gray-600">
           <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
             <a
               href="https://brandcurb.com/en/"
@@ -68,7 +67,7 @@ const Navbar = () => {
               className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
               id="navbar-sticky"
             >
-              <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+              <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white  ">
                 <li>
                   <Link to={"/"}>Dashboard</Link>
                 </li>
@@ -77,7 +76,7 @@ const Navbar = () => {
                   <Link to={"/items"}>Shop</Link>
                 </li>
                 <li>
-                  <Link to={"/contact"}>Contact us</Link>
+                  <Link to={"/contact"} >Contact us</Link>
                 </li>
                 <li>
                   <a

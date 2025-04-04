@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import banner from "../../../src/assets/banner.jpg"
+import banner from "../../../src/assets/banner.jpg";
 
 const Items = () => {
   const [data, setData] = useState([]);
@@ -56,9 +56,9 @@ const Items = () => {
 
   return (
     <>
-    <div>
-      <img src={banner} alt="" />
-    </div>
+      <div>
+        <img src={banner} alt="" />
+      </div>
       <div className="p-7 mt-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:mt-8">
         {data.map(({ price, name, image, description, _id }) => (
           <div
@@ -68,7 +68,7 @@ const Items = () => {
             }
             className="mx-auto w-full max-w-screen-xl xl:mt-20 xl:block"
           >
-            <div className="space-y-6 overflow-hidden rounded-lg border border-gray-200 bg-[#8a5cae64] p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
+            <div className="space-y-6 overflow-hidden rounded-lg border border-gray-200 bg-[#8a5cae64] p-6 shadow-sm">
               <a href="#" className="overflow-hidden rounded block">
                 <img
                   className="mx-auto h-44 w-44 dark:hidden"
