@@ -8,6 +8,7 @@ const connectedToDb = async () => {
     // mongoose.connection.on("connected", () => console.log("✅ DB Connected"));
 
     try {
+        
         await mongoose.connect(url, { dbname: "ecommerce" });
         console.log(chalk.bgBlue.white("✅ Connected to MongoDB"));
     } catch (error) {
