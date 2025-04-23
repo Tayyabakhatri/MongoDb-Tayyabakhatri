@@ -45,9 +45,9 @@ const SignUp = () => {
         toast.success(data.message);
         navigate("/signin");
       }
-      else {
-        toast.error(data.message || "An error occurred while signing up");
-      }
+        else {
+          toast.error(data.message || "An error occurred while signing up");
+        }
     } catch (e) {
       // setLoading(false)
       console.log(e.message);
